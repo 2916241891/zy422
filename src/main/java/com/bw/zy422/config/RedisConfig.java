@@ -31,7 +31,7 @@ public class RedisConfig {
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.afterPropertiesSet();
 
-        return redisTemplate;
+        return redisTemplate ;
     }
 
 }
