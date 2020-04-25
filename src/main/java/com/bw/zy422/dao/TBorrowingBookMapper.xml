@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bw.zy422.dao.TBorrowingBookMapper" >
+  <resultMap id="BaseResultMap" type="com.bw.zy422.model.TBorrowingBook" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BOOK_ID" property="bookId" jdbcType="VARCHAR" />
+    <result column="BORROWING_TIME" property="borrowingTime" jdbcType="TIMESTAMP" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, BOOK_ID, BORROWING_TIME, USER_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bw.zy422.model.TBorrowingBookExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_BORROWING_BOOK
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_BORROWING_BOOK
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_BORROWING_BOOK
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bw.zy422.model.TBorrowingBookExample" >
+    delete from T_BORROWING_BOOK
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bw.zy422.model.TBorrowingBook" >
+    insert into T_BORROWING_BOOK (ID, BOOK_ID, BORROWING_TIME, 
+      USER_ID)
+    values (#{id,jdbcType=VARCHAR}, #{bookId,jdbcType=VARCHAR}, #{borrowingTime,jdbcType=TIMESTAMP}, 
+      #{userId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bw.zy422.model.TBorrowingBook" >
+    insert into T_BORROWING_BOOK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="bookId != null" >
+        BOOK_ID,
+      </if>
+      <if test="borrowingTime != null" >
+        BORROWING_TIME,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="bookId != null" >
+        #{bookId,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowingTime != null" >
+        #{borrowingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+    <select id="countByExample" parameterType="com.bw.zy422.model.TBorrowingBookExample" resultType="java.lang.Integer" >
+    select count(*) from T_BORROWING_BOOK
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+    <update id="updateByExampleSelective" parameterType="map" >
+    update T_BORROWING_BOOK
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookId != null" >
+        BOOK_ID = #{record.bookId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.borrowingTime != null" >
+        BORROWING_TIME = #{record.borrowingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_BORROWING_BOOK
+    set ID = #{record.id,jdbcType=VARCHAR},
+      BOOK_ID = #{record.bookId,jdbcType=VARCHAR},
+      BORROWING_TIME = #{record.borrowingTime,jdbcType=TIMESTAMP},
+      USER_ID = #{record.userId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bw.zy422.model.TBorrowingBook" >
+    update T_BORROWING_BOOK
+    <set >
+      <if test="bookId != null" >
+        BOOK_ID = #{bookId,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowingTime != null" >
+        BORROWING_TIME = #{borrowingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bw.zy422.model.TBorrowingBook" >
+    update T_BORROWING_BOOK
+    set BOOK_ID = #{bookId,jdbcType=VARCHAR},
+      BORROWING_TIME = #{borrowingTime,jdbcType=TIMESTAMP},
+      USER_ID = #{userId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <insert id="save">
+        insert into T_BORROWING_BOOK (ID, BOOK_ID, BORROWING_TIME, USER_ID)
+        values (#{id},#{bookId},#{borrowingTime},#{userId})
+    </insert>
+</mapper>

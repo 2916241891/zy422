@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>书籍详情</h1>
+    <div  th:include="common.html"></div>
+    <input type="hidden" id="bookId" th:value="${bookId}">
+    <strong>书籍图片:<strong> <img  id="pic" /> <br>
+    <strong>书籍名称:<strong> <span id="bookName"></span> <br>
+    <strong>书籍简介:<strong> <span id="bookIntRoduce"></span> <br>
+    <strong>书籍作者:<strong> <span id="bookAuthor"></span> <br>
+    <strong>借阅次数:<strong> <span id="borrowingCount"></span> <br>
+    <strong>借阅状态:<strong> <span id="borrowingFlag"></span> <br>
+    <strong>点击量:<strong> <span id="traffic"></span> <br>
+</body>
+<script>
+    $(function () {
+        var $bookId = $("#bookId").val();
+        $.getJSON('queryBookInfo?id='+$bookId,function (data) {
+            if(null!=data){
+                $("#bookName").text(data.bookName); //图书的名称
+                $("#bookAuthor").text(data.bookAuthor); //图书作者
+                $("#pic").attr("src",data.picUrl); //图书图片
+                $("#borrowingCount").text(data.borrowingCount); //借阅次数
+                $("#traffic").text(data.traffic); //借阅次数
+                $("#borrowingFlag").text(data.borrowingFlag); //借阅次数
+                $("#bookIntRoduce").html(data.bookIntroduce); //因为当前书籍的简介包含有html代码，展示原来的样式，就使用的html
+            }
+        })
+    })
+
+</script>
+</html>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bw.zy422.dao.TBookMapper" >
+  <resultMap id="BaseResultMap" type="com.bw.zy422.model.TBook" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BOOK_NAME" property="bookName" jdbcType="VARCHAR" />
+    <result column="BOOK_INTRODUCE" property="bookIntroduce" jdbcType="VARCHAR" />
+    <result column="BOOK_AUTHOR" property="bookAuthor" jdbcType="VARCHAR" />
+    <result column="BORROWING_COUNT" property="borrowingCount" jdbcType="DECIMAL" />
+    <result column="BORROWING_FLAG" property="borrowingFlag" jdbcType="VARCHAR" />
+    <result column="PIC_URL" property="picUrl" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="TRAFFIC" property="traffic" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, BOOK_NAME, BOOK_INTRODUCE, BOOK_AUTHOR, BORROWING_COUNT, BORROWING_FLAG, PIC_URL, 
+    CREATE_TIME, TRAFFIC
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bw.zy422.model.TBookExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_BOOK
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_BOOK
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_BOOK
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bw.zy422.model.TBookExample" >
+    delete from T_BOOK
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bw.zy422.model.TBook" >
+    insert into T_BOOK (ID, BOOK_NAME, BOOK_INTRODUCE, 
+      BOOK_AUTHOR, BORROWING_COUNT, BORROWING_FLAG, 
+      PIC_URL, CREATE_TIME, TRAFFIC
+      )
+    values (#{id,jdbcType=VARCHAR}, #{bookName,jdbcType=VARCHAR}, #{bookIntroduce,jdbcType=VARCHAR}, 
+      #{bookAuthor,jdbcType=VARCHAR}, #{borrowingCount,jdbcType=DECIMAL}, #{borrowingFlag,jdbcType=VARCHAR}, 
+      #{picUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{traffic,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bw.zy422.model.TBook" >
+    insert into T_BOOK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="bookName != null" >
+        BOOK_NAME,
+      </if>
+      <if test="bookIntroduce != null" >
+        BOOK_INTRODUCE,
+      </if>
+      <if test="bookAuthor != null" >
+        BOOK_AUTHOR,
+      </if>
+      <if test="borrowingCount != null" >
+        BORROWING_COUNT,
+      </if>
+      <if test="borrowingFlag != null" >
+        BORROWING_FLAG,
+      </if>
+      <if test="picUrl != null" >
+        PIC_URL,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="traffic != null" >
+        TRAFFIC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="bookName != null" >
+        #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookIntroduce != null" >
+        #{bookIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="bookAuthor != null" >
+        #{bookAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowingCount != null" >
+        #{borrowingCount,jdbcType=DECIMAL},
+      </if>
+      <if test="borrowingFlag != null" >
+        #{borrowingFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null" >
+        #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="traffic != null" >
+        #{traffic,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bw.zy422.model.TBookExample" resultType="java.lang.Integer" >
+    select count(*) from T_BOOK
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_BOOK
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookName != null" >
+        BOOK_NAME = #{record.bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookIntroduce != null" >
+        BOOK_INTRODUCE = #{record.bookIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookAuthor != null" >
+        BOOK_AUTHOR = #{record.bookAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.borrowingCount != null" >
+        BORROWING_COUNT = #{record.borrowingCount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.borrowingFlag != null" >
+        BORROWING_FLAG = #{record.borrowingFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picUrl != null" >
+        PIC_URL = #{record.picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.traffic != null" >
+        TRAFFIC = #{record.traffic,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_BOOK
+    set ID = #{record.id,jdbcType=VARCHAR},
+      BOOK_NAME = #{record.bookName,jdbcType=VARCHAR},
+      BOOK_INTRODUCE = #{record.bookIntroduce,jdbcType=VARCHAR},
+      BOOK_AUTHOR = #{record.bookAuthor,jdbcType=VARCHAR},
+      BORROWING_COUNT = #{record.borrowingCount,jdbcType=DECIMAL},
+      BORROWING_FLAG = #{record.borrowingFlag,jdbcType=VARCHAR},
+      PIC_URL = #{record.picUrl,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      TRAFFIC = #{record.traffic,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bw.zy422.model.TBook" >
+    update T_BOOK
+    <set >
+      <if test="bookName != null" >
+        BOOK_NAME = #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookIntroduce != null" >
+        BOOK_INTRODUCE = #{bookIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="bookAuthor != null" >
+        BOOK_AUTHOR = #{bookAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowingCount != null" >
+        BORROWING_COUNT = #{borrowingCount,jdbcType=DECIMAL},
+      </if>
+      <if test="borrowingFlag != null" >
+        BORROWING_FLAG = #{borrowingFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null" >
+        PIC_URL = #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="traffic != null" >
+        TRAFFIC = #{traffic,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bw.zy422.model.TBook" >
+    update T_BOOK
+    set BOOK_NAME = #{bookName,jdbcType=VARCHAR},
+      BOOK_INTRODUCE = #{bookIntroduce,jdbcType=VARCHAR},
+      BOOK_AUTHOR = #{bookAuthor,jdbcType=VARCHAR},
+      BORROWING_COUNT = #{borrowingCount,jdbcType=DECIMAL},
+      BORROWING_FLAG = #{borrowingFlag,jdbcType=VARCHAR},
+      PIC_URL = #{picUrl,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      TRAFFIC = #{traffic,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

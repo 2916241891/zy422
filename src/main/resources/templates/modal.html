@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--模态框-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    借阅记录
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row clearfix">
+                        <div class="col-md-10 column">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        编号
+                                    </th>
+                                    <th>
+                                        图书名称
+                                    </th>
+                                    <th>
+                                        借阅时间
+                                    </th>
+                                    <th>
+                                        借阅用户
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="queryBorroingInfoList">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+</body>
+</html>

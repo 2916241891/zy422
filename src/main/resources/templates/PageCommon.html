@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>PageCommon</title>
+</head>
+<body>
+    共有<span th:text="${page.pages}"></span>条数据
+    <button><a th:href="@{list(ym=1)}">首页</a></button>
+    <button th:if="${page.hasPreviousPage}"><a th:href="@{list(ym=${page.prePage})}">上一页</a></button>
+    <span th:text="${page.pageNum}"></span>
+    /<span th:text="${page.lastPage}"></span>
+    <button th:if="${page.hasNextPage}"><a th:href="@{list(ym=${page.nextPage})}">下一页</a></button>
+    <button><a th:href="@{list(ym=${page.lastPage})}">尾页</a></button>
+    每页<span th:text="${page.pageSize}"></span>条
+</body>
+</html>

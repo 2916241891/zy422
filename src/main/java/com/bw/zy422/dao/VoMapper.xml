@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bw.zy422.dao.VoMapper">
+    <resultMap id="VMap" type="com.bw.zy422.model.Vo" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="BOOK_NAME" property="bookName" jdbcType="VARCHAR" />
+        <result column="BOOK_INTRODUCE" property="bookIntroduce" jdbcType="VARCHAR" />
+        <result column="BOOK_AUTHOR" property="bookAuthor" jdbcType="VARCHAR" />
+        <result column="BORROWING_COUNT" property="borrowingCount" jdbcType="DECIMAL" />
+        <result column="BORROWING_FLAG" property="borrowingFlag" jdbcType="VARCHAR" />
+        <result column="PIC_URL" property="picUrl" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <select id="list" resultMap="VMap" parameterType="com.bw.zy422.model.Vo">
+        select * from (select tb.*,tb.BORROWING_FLAG as flag ,
+        tb.BORROWING_FLAG as borrowingFlag,
+        (select  a.BORROWING_TIME from
+        (select bb.BORROWING_TIME,bb.id,bb.BOOK_ID from T_BORROWING_BOOK bb
+        order by bb.BORROWING_TIME desc) a where ROWNUM = 1 and a.BOOK_ID= tb.id
+        ) as borrowingNewTime from T_BOOK  tb )  c
+        where  1 =1
+        <if test="bookName!=null and bookName!='' ">
+            and  c.BOOK_NAME like concat(concat('%',#{bookName}),'%')
+        </if>
+        <if test="startTime!=null and endTime !=null">
+            and c.borrowingNewTime between #{startTime}  and  #{endTime}
+        </if>
+    </select>
+</mapper>

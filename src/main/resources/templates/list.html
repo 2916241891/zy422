@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/css/bootstrap-responsive.css">
+    <link rel="stylesheet" href="../static/css/style.default.css">
+    <script src="../static/js/jquery-1.8.2.min.js"></script>
+</head>
+<script>
+    function updown(id) {
+        $(function () {
+            var url = "updown?id="+id ;
+            $.get(url,function (msg) {
+                if(msg == "yes"){
+                    alert("点赞成功！")
+                }else if(msg == "no"){
+                    alert("图片已经点赞，不能重复点击！")
+                }else if (msg == "noLogin"){
+                    alert("没有登录，不能点赞");
+                }
+            })
+        })
+    }
+    //获取一下数据库中的数据
+    function queryBorrwing(id) {
+        $(function () {
+            alert(id);
+            var url = "/modal?bookId="+id;
+            $.getJSON(
+                url,
+                function (list) {
+                if(list!=null){
+                    //数据的拼接
+                    $("#queryBorroingInfoList").empty()
+                    var append = "" ;
+                    for(var i = 0;i<list.length ;i++){
+                        //时间处理
+                        append += " <tr>" +"<td>" +(i+1)+"</td>"+
+                            "<td>"+list[i].bookName+"</td>"+
+                            "<td>"+list[i].borrowingTime+"</td>"+
+                            "<td>"+list[i].loginName+"</td>"+"</tr>" ;
+                    }
+                    $("#queryBorroingInfoList").append(append);
+                }
+            })
+        })
+    }
+</script>
+<body>
+欢迎<span id="userId" th:text="${tu.loginName}" th:value="${tu.id}"></span>登录
+<button><a th:href="@{Logout}">注销</a></button>
+<form th:action="@{list}" method="post">
+    时间<input name="startTime" id="date1">-
+    <input name="endTime" id="date2">
+    书籍名称：<input name="bookName">
+    <button type="submit">搜索</button>
+</form>
+<div th:include="common.html"></div>
+    <button><a th:href="@{tosave}">添加</a></button>
+<table border="1px">
+    <tr>
+        <th>编号</th>
+        <th>书籍名称</th>
+        <th>简介</th>
+        <th>作者</th>
+        <th>浏览量</th>
+        <th>租借的状态</th>
+        <th>书籍封面</th>
+        <th>最近借出时间</th>
+        <th>点击量</th>
+        <th>编辑</th>
+    </tr>
+    <tr th:each="list:${list}">
+        <td id="id" th:text="${list.id}"></td>
+        <td th:text="${list.bookName}"></td>
+        <td th:text="${list.bookIntroduce}"></td>
+        <td th:text="${list.bookAuthor}"></td>
+        <td th:text="${list.borrowingCount}"></td>
+        <td id="borrowingFlag" th:text="${list.borrowingFlag}"></td>
+        <td>
+            <img th:src="@{${list.picUrl}}" style="width: 60px;height: 60px">
+        </td>
+        <td th:if="${list.borrowingFlag}=='借出'" th:text="${#dates.format(list.borrowingNewTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td th:if="${list.borrowingFlag}=='归还'"></td>
+        <td th:text="${list.traffic}"></td>
+        <td>
+            <button name="but" th:hidden="${list.borrowingFlag}=='借出'"><a th:href="@{flag(id=${list.id},borrowingFlag='借出',userId=${tu.id})}">借出</a></button>
+            <button name="but" th:hidden="${list.borrowingFlag}=='归还'"><a th:href="@{flag(id=${list.id},borrowingFlag='归还',userId=${tu.id})}">归还</a></button>
+            <span> <button class="btn-danger" th:onclick="updown([[${list.id}]])">点赞</button></span>
+            <button class="btn btn-primary" th:onclick="queryBorrwing([[${list.id}]])" data-toggle="modal" data-target="#myModal">借阅记录</button>
+            <button><a th:href="@{toQueryBookInfo(bookId=${list.id})}">查看详情</a></button>
+        </td>
+    </tr>
+</table>
+<div th:include="modal.html"></div>
+<div th:include="PageCommon.html"></div>
+</body>
+</html>

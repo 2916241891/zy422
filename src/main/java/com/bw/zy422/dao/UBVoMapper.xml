@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bw.zy422.dao.UBVoMapper">
+    <resultMap id="BaseResultMapVo" type="com.bw.zy422.model.UBVo" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="BOOK_ID" property="bookId" jdbcType="VARCHAR" />
+        <result column="BORROWING_TIME" property="borrowingTime" jdbcType="TIMESTAMP" />
+        <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+        <result column="book_name" property="bookName" jdbcType="VARCHAR" />
+        <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="queryBookBorrowingList" parameterType="string" resultMap="BaseResultMapVo">
+        select t.id,tb.id, tb.borrowing_time, tu.login_name, t.book_name
+        from t_borrowing_book tb
+                 left join t_user tu on tb.user_id = tu.id
+                 left join t_book t on tb.book_id = t.id
+        where t.id = #{bookId}
+        order by tb.borrowing_time desc
+
+    </select>
+</mapper>

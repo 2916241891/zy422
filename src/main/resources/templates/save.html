@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../static/kindeditor/kindeditor-all-min.js"></script>
+    <script src="../static/kindeditor/lang/zh-CN.js"></script>
+</head>
+<script>
+    KindEditor.ready(function(K) {
+        window.editor = K.create('#editor_id');
+    });
+</script>
+<body class="container">
+
+    <form th:action="@{/save}" method="post" enctype="multipart/form-data" >
+        书籍名称：<input type="text" name="bookName"><br>
+        书籍简介：<textarea id="editor_id" name="bookIntroduce" style="width:200px;height:120px;"></textarea><br>
+        书籍作者：<input name="bookAuthor" /><br>
+        书籍图片：<input type="file" name="file" accept="image/*">
+
+        <input type="submit" value="上传" class="btn btn-success">
+    </form>
+    <div  th:include="common.html"></div>
+</body>
+</html>
